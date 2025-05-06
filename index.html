@@ -80,6 +80,9 @@
         // Конфигурация
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGS94cvzXyV5CyjvpCq50LGN7Kio91p4-Y8EZw-rvNyktvapGVEXuW2LjPaUNWZAHF/exec';
         
+        // Глобальный объект для хранения данных о подарках
+        let giftsData = [];
+        
         // Загрузка данных
         async function loadGifts() {
             try {
@@ -95,18 +98,21 @@
         }
         
         // Бронирование подарка
-        async function reserveGift(row, description) {
-            const userName = prompt(`Вы хотите забронировать "${description}". Введите ваше имя:`);
+        async function reserveGift(index) {
+            const gift = giftsData[index];
+            if (!gift) return;
+            
+            const userName = prompt(`Вы хотите забронировать "${gift.description}". Введите ваше имя:`);
             if (!userName || userName.trim() === '') return;
             
             try {
                 const response = await fetch(
-                    `${SCRIPT_URL}?action=reserve&row=${row}&user=${encodeURIComponent(userName)}`
+                    `${SCRIPT_URL}?action=reserve&row=${gift.row}&user=${encodeURIComponent(userName)}`
                 );
                 const result = await response.json();
                 
                 if (result.success) {
-                    alert(`Подарок "${description}" забронирован на ${userName}!`);
+                    alert(`Подарок "${gift.description}" забронирован на ${userName}!`);
                     window.location.reload();
                 } else {
                     alert(`Ошибка: ${result.message}`);
@@ -128,15 +134,15 @@
                 error.style.display = 'none';
                 container.innerHTML = '';
                 
-                const gifts = await loadGifts();
+                giftsData = await loadGifts();
                 
-                if (gifts.length === 0) {
+                if (giftsData.length === 0) {
                     error.textContent = 'Список подарков пуст';
                     error.style.display = 'block';
                     return;
                 }
                 
-                gifts.forEach(gift => {
+                giftsData.forEach((gift, index) => {
                     const card = document.createElement('div');
                     card.className = 'gift-card';
                     card.innerHTML = `
@@ -145,7 +151,7 @@
                             <h3>${gift.description}</h3>
                             ${gift.link ? `<a href="${gift.link}" target="_blank">Ссылка</a>` : ''}
                             <button class="reserve-btn" 
-                                    onclick="reserveGift(${gift.row}, '${gift.description.replace(/'/g, "\\'")}')"
+                                    onclick="reserveGift(${index})"
                                     ${gift.status === 'Забронирован' ? 'disabled' : ''}>
                                 ${gift.status === 'Забронирован' ? 'Забронировано' : 'Забронировать'}
                             </button>
@@ -167,6 +173,9 @@
         
         // Инициализация
         document.addEventListener('DOMContentLoaded', renderGifts);
+        
+        // Делаем функцию глобальной для обработчиков событий
+        window.reserveGift = reserveGift;
     </script>
 </body>
 </html>
