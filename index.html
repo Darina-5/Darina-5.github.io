@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой вишлист 🎂</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .gift { border: 1px solid #eee; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        button { background: #4CAF50; color: white; border: none; padding: 8px 15px; cursor: pointer; }
+        button:disabled { background: #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Мой список желаний</h1>
+    
+    <div class="gift">
+        <h3>Книга "Гарри Поттер"</h3>
+        <p>Том 1, Дж.К. Роулинг</p>
+        <button onclick="reserve('Книга \"Гарри Поттер\"')">Забронировать</button>
+        <span id="book-status"></span>
+    </div>
+    
+    <div class="gift">
+        <h3>Наушники Sony</h3>
+        <p>WH-1000XM5, черные</p>
+        <button onclick="reserve('Наушники Sony')">Забронировать</button>
+        <span id="headphones-status"></span>
+    </div>
+
+    <script>
+        function reserve(giftName) {
+            const userName = prompt("Как вас зовут?");
+            if (!userName) return;
+            
+            const scriptUrl = https://script.google.com/macros/s/AKfycbxOwQShf_RvRRjArcxZSjodlWwiSDrv0FU_M7bxmNCIjMoOo1ia0XrNn4IGIOO0-oy0/exec;
+            const fullUrl = `${scriptUrl}?gift=${encodeURIComponent(giftName)}&user=${encodeURIComponent(userName)}`;
+            
+            fetch(fullUrl)
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                    // Обновляем статус на странице
+                    if (message.includes("Успешно")) {
+                        document.querySelector(`button[onclick*="${giftName}"]`).disabled = true;
+                        document.getElementById(`${giftName.includes("Книга") ? "book" : "headphones"}-status`).textContent = `✔ Забронировано ${userName}`;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
