@@ -137,7 +137,7 @@
     </style>
 </head>
 <body>
-    <h1>Мой список желаний на день рождения 🎂</h1>
+    <h1>✨Вишлист Дариночки✨</h1>
     
     <div id="loading" class="loader">Загружаем список подарков...</div>
     
@@ -219,7 +219,7 @@
                     <div class="gift-info">
                         <h3 class="gift-title">${gift.description}</h3>
                         <p class="gift-description">${gift.additionalInfo || ''}</p>
-                        ${gift.link ? `<a href="${gift.link}" target="_blank" class="gift-link">Посмотреть в магазине</a>` : ''}
+                        ${gift.link ? `<a href="${gift.link}" target="_blank" class="gift-link">Ссылка</a>` : ''}
                         <button class="reserve-btn" 
                                 onclick="handleReserve(${gift.id}, '${gift.description.replace(/'/g, "\\'")}')"
                                 ${gift.status === 'Забронирован' ? 'disabled' : ''}>
