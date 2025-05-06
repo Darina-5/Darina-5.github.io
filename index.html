@@ -143,7 +143,7 @@
                         <img src="${gift.image || 'placeholder.jpg'}" alt="${gift.description}" class="gift-image">
                         <div class="gift-info">
                             <h3>${gift.description}</h3>
-                            ${gift.link ? `<a href="${gift.link}" target="_blank">Подробнее</a>` : ''}
+                            ${gift.link ? `<a href="${gift.link}" target="_blank">Ссылка</a>` : ''}
                             <button class="reserve-btn" 
                                     onclick="reserveGift(${gift.row}, '${gift.description.replace(/'/g, "\\'")}')"
                                     ${gift.status === 'Забронирован' ? 'disabled' : ''}>
