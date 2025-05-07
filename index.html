@@ -6,7 +6,7 @@
     <title>Мой вишлист</title>
     <style>
         body {
-            font-family: 'Avenir Next', sans-serif;
+            font-family: 'Arial', sans-serif;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
@@ -16,7 +16,6 @@
             text-align: center;
             color: #2c3e50;
             font-size: 25px;
-
         }
         .gift-container {
             display: grid;
@@ -29,6 +28,9 @@
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex; /* Добавлено */
+            flex-direction: column; /* Добавлено */
+            height: 100%; /* Добавлено */
         }
         .gift-image {
             width: 100%;
@@ -38,6 +40,16 @@
         }
         .gift-info {
             margin-top: 10px;
+            flex-grow: 1; /* Добавлено - позволяет контенту растягиваться */
+            display: flex; /* Добавлено */
+            flex-direction: column; /* Добавлено */
+        }
+        .gift-description {
+            flex-grow: 1; /* Добавлено - занимает все доступное пространство */
+        }
+        .gift-footer { /* Новый элемент */
+            margin-top: auto; /* Автоматический отступ сверху */
+            padding-top: 10px;
         }
         .reserve-btn {
             background: #27ae60;
@@ -150,15 +162,19 @@
                     card.innerHTML = `
                         <img src="${gift.image || 'placeholder.jpg'}" alt="${gift.description}" class="gift-image">
                         <div class="gift-info">
-                            <h3>${gift.description}</h3>
-                            ${gift.link ? `<a href="${gift.link}" target="_blank">Ссылка</a>` : ''}
-                            <button class="reserve-btn" 
-                                    onclick="reserveGift(${index})"
-                                    ${gift.status === 'Забронирован' ? 'disabled' : ''}>
-                                ${gift.status === 'Забронирован' ? 'Забронировано' : 'Забронировать'}
-                            </button>
-                            ${gift.status === 'Забронирован' ? 
-                              `<p class="status">Забронировал(а): ${gift.reservedBy}</p>` : ''}
+                            <div class="gift-description">
+                                <h3>${gift.description}</h3>
+                            </div>
+                            <div class="gift-footer">
+                                ${gift.link ? `<a href="${gift.link}" target="_blank">Ссылка</a>` : ''}
+                                <button class="reserve-btn" 
+                                        onclick="reserveGift(${index})"
+                                        ${gift.status === 'Забронирован' ? 'disabled' : ''}>
+                                    ${gift.status === 'Забронирован' ? 'Забронировано' : 'Забронировать'}
+                                </button>
+                                ${gift.status === 'Забронирован' ? 
+                                  `<p class="status">Забронировал(а): ${gift.reservedBy}</p>` : ''}
+                            </div>
                         </div>
                     `;
                     container.appendChild(card);
