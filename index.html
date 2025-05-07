@@ -6,7 +6,7 @@
     <title>Мой вишлист</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Avenir Next', sans-serif;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
@@ -16,40 +16,49 @@
             text-align: center;
             color: #2c3e50;
             font-size: 25px;
+            margin-bottom: 20px;
         }
         .gift-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 10px;
         }
         .gift-card {
             background: white;
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex; /* Добавлено */
-            flex-direction: column; /* Добавлено */
-            height: 100%; /* Добавлено */
+            display: flex;
+            flex-direction: column;
+            height: auto; /* Изменено с 100% на auto */
+            min-height: 450px; /* Фиксированная минимальная высота */
         }
         .gift-image {
             width: 100%;
-            height: 330px;
+            height: 200px; /* Уменьшено с 330px */
             object-fit: cover;
             border-radius: 5px;
         }
         .gift-info {
             margin-top: 10px;
-            flex-grow: 1; /* Добавлено - позволяет контенту растягиваться */
-            display: flex; /* Добавлено */
-            flex-direction: column; /* Добавлено */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         .gift-description {
-            flex-grow: 1; /* Добавлено - занимает все доступное пространство */
+            flex-grow: 1;
+            margin-bottom: 10px;
         }
-        .gift-footer { /* Новый элемент */
-            margin-top: auto; /* Автоматический отступ сверху */
+        .gift-description h3 {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        .gift-footer {
+            margin-top: auto;
             padding-top: 10px;
+            border-top: 1px solid #eee;
         }
         .reserve-btn {
             background: #27ae60;
@@ -60,6 +69,7 @@
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
+            font-size: 14px;
         }
         .reserve-btn:disabled {
             background: #95a5a6;
@@ -78,6 +88,16 @@
             color: #e74c3c;
             text-align: center;
             padding: 20px;
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
